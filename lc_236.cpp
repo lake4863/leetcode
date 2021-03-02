@@ -18,16 +18,13 @@ public:
             bool rq = isAncestor(root->right, q);
             
             if(lp && lq) {
-//                cout << "root->left->val = " << root->left->val << ", isAn(left) = " << isAncestor(root->left, p) << ", isAn(right) = " << isAncestor(root->left, q) << endl;
                 return lowestCommonAncestor(root->left, p, q);
-            } else if(rp && rq) {
+            } 
+	    if(rp && rq) {
                 return lowestCommonAncestor(root->right, p, q);
-            } else {
-                return root;
             }
-        } else {
-            return root;
         }
+        return root;
     }
     
     bool isAncestor(TreeNode* parent, TreeNode* p) {
@@ -35,10 +32,9 @@ public:
         bool isleft = isAncestor(parent->left, p);
         bool isright = isAncestor(parent->right, p);
             
-        if(parent == p) {
-            return true;
-        } else {
+        if(parent != p) {
             return isleft || isright;
         }
+        return true;
     }
 };
