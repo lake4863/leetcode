@@ -53,3 +53,30 @@ public:
         return result;
     }
 };
+
+class Solution {
+public:
+    int minMeetingRooms(vector<vector<int>>& intervals) {
+        int result = 1;
+        int mx = 1;
+        int minEnd = intervals[0][1];
+        int maxBegin = intervals[0][0];
+        sort(intervals.begin(), intervals.end());
+        
+        for(int i = 1; i < intervals.size(); ++i) {
+            minEnd = min(minEnd, intervals[i][1]);
+            maxBegin = max(maxBegin, intervals[i][0]);
+            
+            if(intervals[i - 1][1] <= maxBegin) {
+                --mx;
+            }
+            
+            if(intervals[i][0] < minEnd) {
+                ++mx;
+                result = max(result, mx);
+            }
+        }
+               
+        return result;
+    }
+};
