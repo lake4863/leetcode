@@ -1,27 +1,41 @@
 class MyCalendarThree {
 private:
-    vector<vector<int>> intervals;
-    priority_queue<int, vector<int>, greater<int>> pq;
+    map<int, int> count;
+    int con;
+    int result;
 public:
     MyCalendarThree() {
-        intervals.clear();
+        con = 0;
+        result = 0;
+        count.clear();
     }
     
     int book(int start, int end) {
-        intervals.push_back({ start, end });
-        sort(intervals.begin(), intervals.end(), [](vector<int> lhs, vector<int> rhs) {
-            return lhs[0] < rhs[0];
-        });
-        while(!pq.empty()) pq.pop();
+        ++count[start];
+        --count[end];
         
+        /*
         for(auto i : intervals) {
-            if(!pq.empty() && i[0] >= pq.top()) {
-                pq.pop();
+            if(count.find(i[0]) == count.end()) {
+                count[i[0]] = 1;
+            } else {
+                ++count[i[0]];
             }
-            pq.push(i[1]);
+            
+            if(count.find(i[1]) == count.end()) {
+                count[i[1]] = -1;
+            } else {
+                --count[i[1]];
+            }
+        }
+        */
+        
+        for(auto it = count.begin(); it != count.end(); ++it) {
+            con += it->second;
+            result = max(result, con);
         }
         
-        return pq.size();
+        return result;        
     }
 };
 
