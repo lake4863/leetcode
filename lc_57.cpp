@@ -1,3 +1,34 @@
+// merge corner cases into the solution
+class Solution {
+public:
+    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+        vector<vector<int>> result;
+        int sta = newInterval[0];
+        int end = newInterval[1];
+        
+        if(intervals.size() == 0 || end < intervals[0][0]) result.push_back(newInterval);
+        
+        for(int i = 0; i < intervals.size(); ++i) {
+            if(intervals[i][1] < newInterval[0]) {
+                result.push_back(intervals[i]);
+            } else if(intervals[i][1] >= newInterval[0] && (i - 1 < 0 || intervals[i - 1][1] < newInterval[0])) {
+                sta = min(intervals[i][0], sta);
+            } 
+            
+            if(intervals[i][0] > newInterval[1]) {
+                result.push_back(intervals[i]);
+            } else if(i - 1 < 0 || intervals[i - 1][0] < newInterval[1]) {
+                end = max(intervals[i][1], end);
+                if(sta != -1 && (i + 1 > intervals.size() - 1 || end < intervals[i + 1][0])) {
+                    result.push_back({ sta, end });
+                }
+            }
+        }
+        
+        return result;
+    }
+};
+
 class Solution {
 public:
     vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
