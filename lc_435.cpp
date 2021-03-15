@@ -5,6 +5,27 @@ public:
         int pre;
         if(intervals.size() < 2) return 0;
         
+        sort(begin(intervals), end(intervals));
+        
+        pre = intervals[intervals.size() - 1][0];
+        for(int i = intervals.size() - 2; i >= 0; --i) {
+            if(intervals[i][1] <= pre) {
+                ++count;
+                pre = intervals[i][0];
+            }
+        }
+        
+        return intervals.size() - count;
+    }
+};
+
+class Solution {
+public:
+    int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+        int count = 1;
+        int pre;
+        if(intervals.size() < 2) return 0;
+        
         sort(begin(intervals), end(intervals), [](auto lhs, auto rhs) {
             return lhs[0] < rhs[0];
         });
