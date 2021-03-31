@@ -1,6 +1,30 @@
 class Solution {
 public:
     int minEatingSpeed(vector<int>& piles, int h) {
+        int minn = 1;
+        int maxx = 1000000000;
+        int mid = 0;
+        
+        while(minn < maxx) {
+            int k = 0;
+            mid = minn + (maxx - minn) / 2;
+            for(int i : piles) k += ((i + mid - 1) / mid);
+            //cout << "mid = " << mid << ", k = " << k << ", minn = " << minn << ", maxx = " << maxx << endl;
+            
+            if(k > h) {
+                minn = mid + 1;
+            } else {
+                maxx = mid;
+            }
+        }
+        
+        return minn;
+    }
+};
+
+class Solution {
+public:
+    int minEatingSpeed(vector<int>& piles, int h) {
         int minn = 1;      //piles.size();
         int maxx = 1000000000;
         int sum = 0;
