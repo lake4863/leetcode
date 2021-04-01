@@ -32,7 +32,7 @@ public:
                 flow = 0;
             } else if (++flow >= k) {
                 bouq++;
-                flow = 0;
+                flow = 0;    // bloom used so flow set back to 0
             }
         }
         
