@@ -6,29 +6,21 @@ public:
         int mid = 0;
         int sum = 0;
         
-        if(threshold == nums.size()) return *max_element(nums.begin(), nums.end());
+        //if(threshold == nums.size()) return *max_element(nums.begin(), nums.end());
         
         while(lo < hi) {
+            sum = 0;
             mid = lo + (hi - lo) / 2;
-            sum = ccount(nums, mid);
         
-            //cout << "1, sum = " << sum << ", mid = " << mid << endl;
+            for(int i : nums) sum += (i + mid - 1) / mid;
+            
             if(sum > threshold) {
                 lo = mid + 1;
-            //cout << "2, lo = " << lo << ", hi = " << hi << endl;
             } else {
                 hi = mid;
             }
         }
         
         return lo;
-    }
-    
-    int ccount(vector<int>& nums, int mid) {
-        int sum = 0;
-        
-        for(int i : nums) sum += (i + mid - 1) / mid;
-        
-        return sum;
     }
 };
