@@ -13,7 +13,7 @@ public:
             sum = ccount(nums, mid);
         
             //cout << "1, sum = " << sum << ", mid = " << mid << endl;
-            if(sum + 1 > threshold) {
+            if(sum > threshold) {
                 lo = mid + 1;
             //cout << "2, lo = " << lo << ", hi = " << hi << endl;
             } else {
@@ -21,7 +21,7 @@ public:
             }
         }
         
-        return mid;
+        return lo;
     }
     
     int ccount(vector<int>& nums, int mid) {
