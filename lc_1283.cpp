@@ -24,3 +24,25 @@ public:
         return lo;
     }
 };
+
+class Solution {
+public:
+    int smallestDivisor(vector<int>& nums, int threshold) {
+        int n = nums.size(), left = 1, right = *max_element(nums.begin(), nums.end());
+        while (left <= right) {
+            int mid = left + (right-left)/2, sum = 0;
+            for (auto num:nums) sum += (num%mid ? num/mid+1 : num/mid);
+            sum <= threshold ? right = mid-1 : left = mid+1;
+        }
+        return left;
+    }
+};
+
+/*
+    binary search
+    left = 1, right = max_element(nums)
+    
+    sum <= threshold right = mid-1
+    else left = mid+1
+    
+*/
