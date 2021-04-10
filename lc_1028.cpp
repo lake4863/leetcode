@@ -175,3 +175,57 @@ public:
         return temp ;
     }
 };
+
+class Solution {
+public:
+    TreeNode* recoverFromPreorder(string &S,int &i,int d)
+    {
+        TreeNode* root=new TreeNode(-1);
+        int start=S.find_first_of("1234567890",i);                              //Get index of the first number after i
+        if(start-i==d)                                           //If number of '-' in between = depth create root with the integer after it
+        {
+            i=start;
+            start=S.find("-",i);
+        }
+        else                                                    //Since depth is not correct to add the integer return NULL;
+            return NULL;
+        root->val=stoi(S.substr(i,start-i));                    //Set the correct root value
+        i=start;                                                //Move index forward
+        root->left=recoverFromPreorder(S,i,d+1);                //Create left subtree
+        root->right=recoverFromPreorder(S,i,d+1);               //Create right subtree
+        return root;
+    }
+    TreeNode* recoverFromPreorder(string S)
+    {
+        int i=S.find("-");
+        TreeNode* root=new TreeNode(stoi(S.substr(0,i)));       //Get first integer and store it as root
+        root->left=recoverFromPreorder(S,i,1);                  //Create left subtree
+        root->right=recoverFromPreorder(S,i,1);                 //Create right subtree
+        return root;
+    }
+};
+
+class Solution {
+public:
+    TreeNode* recoverFromPreorder(string S) {
+        if (S.empty()) return nullptr;
+        auto pos = 0;
+        return decode(S, pos, 0);
+    }
+    
+private:
+    TreeNode *decode(const std::string &s, int &pos, int dashCount) {
+        if (pos >= s.size()) return nullptr;
+        auto curPos = pos;
+        while (curPos < s.size() && s[curPos] == '-') ++curPos;
+        if (curPos - pos != dashCount) return nullptr;
+        int val = 0;
+        for(; curPos < s.size() && s[curPos] != '-'; ++curPos)
+            val = val * 10 + s[curPos] - '0';
+        auto node = new TreeNode(val);
+        pos = curPos;
+        node->left = decode(s, pos, dashCount + 1);
+        node->right = decode(s, pos, dashCount + 1);
+        return node;
+    }
+};
