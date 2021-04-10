@@ -12,6 +12,47 @@
 class Solution {
 public:
     TreeNode* recoverFromPreorder(string S) {
+        stack<TreeNode*> s;
+        
+        for(int i = 0, dep, val; i < S.length(); ) {
+            for(dep = 0; S[i] == '-'; ++i) {
+                ++dep;
+            }
+            for(val = 0; i < S.length() && S[i] != '-'; ++i) {
+                val = val * 10 + S[i] - '0';
+            }
+            while(s.size() > dep) s.pop();
+            TreeNode* node = new TreeNode(val);
+            if(!s.empty()) {
+                if(s.top()->left) {
+                    s.top()->right = node;
+                } else {
+                    s.top()->left = node;
+                }
+            }
+            s.push(node);
+        }
+        
+        while(s.size() > 1) s.pop();
+        
+        return s.top();
+    }
+};
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* recoverFromPreorder(string S) {
         int cntdp = 0;
         int dep = 0;
         bool inword = false;
