@@ -21,15 +21,19 @@ public:
         //cout << deptar << endl;
         for(auto i : path) {
             if(i) {
-                //cout << i->val << endl;
+                //cout << "find the path to target = "<< i->val << endl;
                 ++n;
             }
+        }
+        if(K < n) {
+            return { path[n - 1 - K]->val };
         }
         
         for(int i = 0; i < n - 1; ++i) {
             if(path[i]->left == path[i + 1]) {
                 traverse(root->right, K - n + i, path[i], result);
             } else {
+                //cout << i << " = i" << endl;
                 traverse(root->left, K - n + i, path[i], result);
             }
         }
