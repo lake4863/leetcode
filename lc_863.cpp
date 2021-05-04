@@ -10,6 +10,58 @@
 class Solution {
 public:
     vector<int> distanceK(TreeNode* root, TreeNode* target, int K) {
+        ans.clear();
+        traverseK(root, target, K);
+        return ans;
+    }
+private:
+    vector<int> ans;
+    
+    int traverseK(TreeNode* root, TreeNode* target, int K) {
+        if(!root) return -1;
+        if(root == target) {
+            collect(target, K);
+            return 0;
+        }
+        
+        int lhs = traverseK(root->left, target, K);
+        int rhs = traverseK(root->right, target, K);
+        
+        if(lhs >= 0) {
+            if(lhs == K - 1) ans.push_back(root->val);
+            collect(root->right, K - lhs - 2);
+            return lhs + 1;
+        }
+        
+        if(rhs >= 0) {
+            if(rhs == K - 1) ans.push_back(root->val);
+            collect(root->left, K - rhs - 2);
+            return rhs + 1;
+        }
+        
+        return -1;
+    }
+    
+    void collect(TreeNode* target, int K) {
+        if(!target || K < 0) return;
+        if(!K) ans.push_back(target->val);
+        collect(target->left, K - 1);
+        collect(target->right, K - 1);
+    }
+};
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int K) {
         preorder(root, nullptr);
         vector<int> res, aux;
         res.push_back(target->val);
