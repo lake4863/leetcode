@@ -1,6 +1,32 @@
 class Solution {
 public:
     string largestNumber(vector<int>& nums) {
+        if (std::all_of(nums.cbegin(), nums.cend(), [](int i){ return i == 0; })) {
+            return "0";
+        }
+        int n = nums.size();
+        vector<string> vs(n);
+        for(int i = 0; i < n; ++i) {
+            vs[i] = to_string(nums[i]);
+        }
+        
+        sort(vs.begin(), vs.end(), [](string lhs, string rhs) {
+            return lhs + rhs < rhs + lhs;
+        });
+        //for(auto i : vs) cout << i << " ";
+        string result;
+        
+        for(int i = n - 1; i > -1; --i) {
+            result += vs[i];
+        }
+        
+        return result; 
+    }
+};
+
+class Solution {
+public:
+    string largestNumber(vector<int>& nums) {
         int n = nums.size();
         vector<string> vs(n);
         for(int i = 0; i < n; ++i) {
