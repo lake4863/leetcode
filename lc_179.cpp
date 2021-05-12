@@ -1,6 +1,26 @@
 class Solution {
 public:
     string largestNumber(vector<int>& nums) {
+        if (all_of(nums.begin(), nums.end(), [](int i){ return i == 0; })) {
+            return "0";
+        }
+        string result;
+        
+        sort(nums.begin(), nums.end(), [](int lhs, int rhs) {
+            return to_string(lhs) + to_string(rhs) > to_string(rhs) + to_string(lhs);
+        });
+        
+        for(int i : nums) {
+            result += to_string(i);
+        }
+        
+        return result; 
+    }
+};
+
+class Solution {
+public:
+    string largestNumber(vector<int>& nums) {
         if (std::all_of(nums.cbegin(), nums.cend(), [](int i){ return i == 0; })) {
             return "0";
         }
