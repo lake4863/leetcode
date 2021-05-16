@@ -4,6 +4,24 @@ public:
         int n = nums.size();
         if(n == 1) return 0;
         vector<int> sub(n, 0);
+        int result = 0;
+        
+        sort(nums.begin(), nums.end());
+        
+        for(int i = 1; i < n; ++i) {
+            result = max(result, nums[i] - nums[i - 1]); 
+        }
+        
+        return result;
+    }
+};
+
+class Solution {
+public:
+    int maximumGap(vector<int>& nums) {
+        int n = nums.size();
+        if(n == 1) return 0;
+        vector<int> sub(n, 0);
         
         sort(nums.begin(), nums.end());
         
