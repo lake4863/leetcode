@@ -96,3 +96,41 @@ public:
         return res;
     }
 };
+
+class Solution {
+    public int findNumberOfLIS(int[] nums) {
+        int n = nums.length;
+        if(n == 0) return 0;
+
+        /*
+        ArrayList<Integer> len = new ArrayList<Integer>(n);
+        ArrayList<Integer> count = new ArrayList<Integer>(n);
+        */
+        int[] len = new int[n];
+        int[] count = new int[n];
+
+        int max_len = 0;
+        for(int i = 0; i < n; ++i) {
+            len[i] = count[i] = 1;
+            for(int j = 0; j < i; ++j) {
+                if(nums[i] > nums[j]) {
+                    if(len[i] < len[j] + 1) {
+                        len[i] = len[j] + 1;
+                        count[i] = count[j];
+                    } else if(len[i] == len[j] + 1) {
+                        count[i] += count[j];
+                    }
+                }
+            }
+            max_len = Math.max(max_len, len[i]);
+        }
+
+        int res = 0;
+        for(int i = 0; i < n; ++i) {
+            if(len[i] == max_len) {
+                res += count[i];
+            }
+        }
+        return res;
+    }
+}
